@@ -1,17 +1,17 @@
 name: CI
-
-on: [push]
-
+on:
+  push:
+    branches:
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
     - name: Build Docker image
-      run: docker build -t welcome .
-    - name: Push Docker image to Docker Hub
-      run: docker push welcome
+      run: docker build -t welcome-example:latest .
+    - name: Push Docker image to registry
+      run: docker push welcome-example:latest
     - name: Deploy to Kubernetes
-      uses: kubectl/kubectl-action@v1
-      with:
-        args: apply -f deployment.yaml
+      run: kubectl apply -f deployment.yaml

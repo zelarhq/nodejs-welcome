@@ -1,19 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: welcome
+  name: welcome-example
 spec:
-  replicas: 3
   selector:
     matchLabels:
-      app: welcome
+      app: welcome-example
   template:
     metadata:
       labels:
-        app: welcome
+        app: welcome-example
     spec:
       containers:
-      - name: welcome
-        image: welcome
+      - name: welcome-example
+        image: welcome-example:latest
         ports:
         - containerPort: 80
