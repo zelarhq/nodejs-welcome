@@ -7,10 +7,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Build Docker image
-        run: docker build -t welcome-example .
-      - name: Push Docker image
-        run: docker push welcome-example
-      - name: Deploy to Kubernetes
-        run: kubectl apply -f deployment.yaml
+    - uses: actions/checkout@v2
+    - name: Build Docker image
+      run: docker build -t welcome-example .
+    - name: Push Docker image
+      run: docker push welcome-example
+    - name: Deploy to Kubernetes
+      run: kubectl apply -f deployment.yaml
