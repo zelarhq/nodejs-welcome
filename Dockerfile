@@ -1,6 +1,3 @@
-FROM node:16
-WORKDIR /usr/src/app
-COPY package*.json ./
-RUN npm install
-COPY . .
-CMD [ "npm", "start" ]
+FROM nginx
+COPY index.html /usr/share/nginx/html
+EXPOSE 80

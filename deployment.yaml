@@ -15,4 +15,4 @@ spec:
       - name: welcome-app
         image: welcome-app
         ports:
-        - containerPort: 3000
+        - containerPort: 80
