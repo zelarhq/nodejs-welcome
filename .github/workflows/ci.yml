@@ -1,21 +1,25 @@
-name: CI/CD
-on:
-  push:
-    branches:
-      - main
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build Docker image
-        run: docker build -t welcome-example .
-      - name: Push Docker image to registry
-        run: docker push welcome-example
-  deploy:
-    needs: build
-    runs-on: kubernetes
-    steps:
-      - uses: actions/checkout@v2
-      - name: Deploy to Kubernetes cluster
-        run: kubectl apply -f deployment.yaml
+
+        name: CI
+
+        on: [push]
+
+        jobs:
+          build:
+            runs-on: ubuntu-latest
+            steps:
+            - uses: actions/checkout@v2
+            - name: Build Docker image
+              run: docker build -t welcome-example .
+            - name: Push Docker image to Docker Hub
+              run: docker push welcome-example
+            - name: Deploy to Kubernetes
+              uses: GoogleCloudPlatform/github-actions/deploy-to-kubernetes@v0
+              with:
+                args: --namespace=default --image=welcome-example:latest
+          test:
+            runs-on: ubuntu-latest
+            steps:
+            - uses: actions/checkout@v2
+            - name: Run tests
+              run: npm test
+        
