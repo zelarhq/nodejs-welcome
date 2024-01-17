@@ -1,0 +1,21 @@
+name: CI/CD
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Docker image
+        run: docker build -t welcome-example .
+      - name: Push Docker image to registry
+        run: docker push welcome-example
+  deploy:
+    needs: build
+    runs-on: kubernetes
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy to Kubernetes cluster
+        run: kubectl apply -f deployment.yaml
